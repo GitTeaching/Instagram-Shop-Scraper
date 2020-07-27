@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="shop_sidebar_area">
+
+        <!-- ##### Single Widget ##### -->
+        <div class="widget catagory mb-50">
+            <!-- Widget Title -->
+            <h6 class="widget-title mb-30">Categories</h6>
+
+            <!--  Catagories  -->
+            <div class="catagories-menu">
+                <ul>
+                    <li><a href="{{ url_for('shop', category='Clothes', numpage=1) }}">Clothes</a></li>
+                    <li><a href="{{ url_for('shop', category='Shoes', numpage=1) }}">Shoes</a></li>
+                    <li><a href="{{ url_for('shop', category='Accessories', numpage=1) }}">Accessories</a></li>
+                    <li><a href="{{ url_for('shop', category='Sport', numpage=1) }}">Sport</a></li>
+                    <li><a href="{{ url_for('shop', category='Cosmetics', numpage=1) }}">Cosmetics</a></li>
+                    <li><a href="{{ url_for('shop', category='Deco', numpage=1) }}">Deco</a></li>
+                    <li><a href="{{ url_for('shop', category='Tech', numpage=1) }}">Tech</a></li>
+                    <li><a href="{{ url_for('shop', category='Handmade-Soap', numpage=1) }}">Handmade Soap</a></li>
+                    <li><a href="{{ url_for('shop', category='Terroir', numpage=1) }}">Terroir</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="amado_product_area section-padding-100">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-topbar d-xl-flex align-items-end justify-content-between">
+                        <!-- Total Products -->
+                        <div class="total-products">
+                            <p>Showing 1-6 0f {{likes|length}}</p>
+                            <div class="view d-flex">
+                                <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for i in range(6*numpage-6, 6*numpage) %}
+                <!-- Single Product Area -->
+                <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <!--   <div class="product-img">
+                            <img src="{{img[i]}}" alt="">
+                            <img class="hover-img" src="{{img[i]}}" alt="">
+                        </div> -->
+                        <div class="product-img view overlay zoom">
+                            <a href="{{ url_for('product_details', category=category, shop=shop[i], likes=likes[i], descr=descr[i], img=img[i], link=link[i]) }}">
+                                <img src="{{img[i]}}" class="img-fluid " alt="" style="width: 489px; height: 330px;"> 
+                            </a>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description d-flex align-items-center justify-content-between">
+                            <!-- Product Meta Data -->
+                            <div class="product-meta-data">
+                                <div class="line"></div>
+                                <p class="product-price">{{likes[i]}} likes</p>
+                                <a href="{{ url_for('product_details', category=category, shop=shop[i], likes=likes[i], descr=descr[i], img=img[i], link=link[i]) }}">
+                                    <h6>{{category}}</h6>
+                                </a>
+                            </div>
+                            <!-- Ratings & Cart -->
+                            <div class="ratings-cart text-right">
+                                <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    {% if likes[i] > 50 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    {% endif %}
+                                    {% if likes[i] > 100 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    {% endif %}
+                                    {% if likes[i] > 150 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="cart">
+                                    <a href="#" data-toggle="tooltip" data-placement="left"><img src="/static/img/core-img/cart.png" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}  
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <!-- Pagination -->
+                    <nav aria-label="navigation">
+                        <ul class="pagination justify-content-end mt-50">
+                            {% for j in range(1, ((likes|length) // 6) + 1) %} 
+                                {% if numpage==j %}
+                                    <li class="page-item active"><a class="page-link" href="{{ url_for('shop', category=category, numpage=j, img=img, likes=likes, shop=shop, descr=descr, link=link) }}">0{{j}}.</a></li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="{{ url_for('shop', category=category, numpage=j, img=img, likes=likes, shop=shop, descr=descr, link=link) }}">0{{j}}.</a></li>
+                                {% endif %}
+                            {% endfor %} 
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
