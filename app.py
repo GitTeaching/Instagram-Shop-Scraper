@@ -69,6 +69,20 @@ def get_products_by_shop(url):
 	posts = user_data['edge_owner_to_timeline_media']['edges']
 	return posts
 
+# JSON Version
+def get_products_json(category):
+	products = []
+	for i in range(0, len(urls[category])):
+		filename = 'data/' + category + str(i) + '.json'
+		with open(filename) as json_file:
+			data = json.load(json_file)
+			jsondata = json.loads(data)
+			user_data = jsondata['entry_data']['ProfilePage'][0]['graphql']['user']
+			posts = user_data['edge_owner_to_timeline_media']['edges']
+			for post in posts:
+				products.append(post)
+	return products
+
 
 @app.route('/')
 @app.route('/home')
@@ -79,7 +93,7 @@ def home():
 @app.route('/shop/<category>/<int:numpage>')
 def shop(category, numpage):
 	if numpage == 1:
-		products = get_products(category)
+		products = get_products_json(category)
 		likes = [products[i]['node']['edge_liked_by']['count'] for i in range(0, len(products))]
 		img = [products[i]['node']['display_url'] for i in range(0, len(products))]
 		shop = [products[i]['node']['owner']['username'] for i in range(0, len(products))]
