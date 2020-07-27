@@ -90,27 +90,45 @@ def home():
 	return render_template('index.html')
 
 
+# @app.route('/shop/<category>/<int:numpage>')
+# def shop(category, numpage):
+# 	if numpage == 1:
+# 		products = get_products_json(category)
+# 		likes = [products[i]['node']['edge_liked_by']['count'] for i in range(0, len(products))]
+# 		img = [products[i]['node']['display_url'] for i in range(0, len(products))]
+# 		shop = [products[i]['node']['owner']['username'] for i in range(0, len(products))]
+# 		descr = []
+# 		for i in range(0, len(products)):
+# 			if not products[i]['node']['edge_media_to_caption']['edges']:
+# 				descr.append("No description available.")
+# 			else:
+# 				descr.append(products[i]['node']['edge_media_to_caption']['edges'][0]['node']['text'])
+# 		link = [('https://www.instagram.com/p/' + products[i]['node']['shortcode']) for i in range(0, len(products))]
+# 	else:
+# 		img = request.args.getlist('img')
+# 		likes = request.args.getlist('likes')
+# 		likes = list(map(int, likes))
+# 		shop = request.args.getlist('shop')
+# 		descr = request.args.getlist('descr')
+# 		link = request.args.getlist('link')
+
+# 	return render_template('shop.html', category=category, likes=likes, img=img, shop=shop, descr=descr, link=link, numpage=numpage)
+
+# Heroku
 @app.route('/shop/<category>/<int:numpage>')
 def shop(category, numpage):
-	if numpage == 1:
-		products = get_products_json(category)
-		likes = [products[i]['node']['edge_liked_by']['count'] for i in range(0, len(products))]
-		img = [products[i]['node']['display_url'] for i in range(0, len(products))]
-		shop = [products[i]['node']['owner']['username'] for i in range(0, len(products))]
-		descr = []
-		for i in range(0, len(products)):
-			if not products[i]['node']['edge_media_to_caption']['edges']:
+	
+	products = get_products_json(category)
+	likes = [products[i]['node']['edge_liked_by']['count'] for i in range(0, len(products))]
+	img = [products[i]['node']['display_url'] for i in range(0, len(products))]
+	shop = [products[i]['node']['owner']['username'] for i in range(0, len(products))]
+	descr = []
+	for i in range(0, len(products)):
+		if not products[i]['node']['edge_media_to_caption']['edges']:
 				descr.append("No description available.")
-			else:
-				descr.append(products[i]['node']['edge_media_to_caption']['edges'][0]['node']['text'])
-		link = [('https://www.instagram.com/p/' + products[i]['node']['shortcode']) for i in range(0, len(products))]
-	else:
-		img = request.args.getlist('img')
-		likes = request.args.getlist('likes')
-		likes = list(map(int, likes))
-		shop = request.args.getlist('shop')
-		descr = request.args.getlist('descr')
-		link = request.args.getlist('link')
+		else:
+			descr.append(products[i]['node']['edge_media_to_caption']['edges'][0]['node']['text'])
+	link = [('https://www.instagram.com/p/' + products[i]['node']['shortcode']) for i in range(0, len(products))]
 
 	return render_template('shop.html', category=category, likes=likes, img=img, shop=shop, descr=descr, link=link, numpage=numpage)
 
