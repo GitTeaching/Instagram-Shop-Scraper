@@ -61,7 +61,7 @@ def get_products(category):
 
 def get_products_by_shop(url):
 	page = requests.get(url)
-	soup = BeautifulSoup(page.text, 'html.parser')
+	soup = BeautifulSoup(page.content, 'html.parser')
 	script = soup.findAll('script', {'type': 'text/javascript'})[3].text
 	raw_data = script.replace(';', '').replace('window._sharedData = ', '')
 	jsondata = json.loads(raw_data)
