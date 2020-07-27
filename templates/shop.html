@@ -100,9 +100,9 @@
                         <ul class="pagination justify-content-end mt-50">
                             {% for j in range(1, ((likes|length) // 6) + 1) %} 
                                 {% if numpage==j %}
-                                    <li class="page-item active"><a class="page-link" href="{{ url_for('shop', category=category, numpage=j, img=img, likes=likes, shop=shop, descr=descr, link=link) }}">0{{j}}.</a></li>
+                                    <li class="page-item active"><a class="page-link" href="{{ url_for('shop', category=category, numpage=j) }}">0{{j}}.</a></li>
                                 {% else %}
-                                    <li class="page-item"><a class="page-link" href="{{ url_for('shop', category=category, numpage=j, img=img, likes=likes, shop=shop, descr=descr, link=link) }}">0{{j}}.</a></li>
+                                    <li class="page-item"><a class="page-link" href="{{ url_for('shop', category=category, numpage=j) }}">0{{j}}.</a></li>
                                 {% endif %}
                             {% endfor %} 
                         </ul>
