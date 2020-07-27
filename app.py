@@ -64,7 +64,7 @@ def get_products_by_shop(url):
 	soup = BeautifulSoup(page.text, features="lxml")
 	script = soup.findAll('script', {'type': 'text/javascript'})[3].text
 	raw_data = script.replace(';', '').replace('window._sharedData = ', '')
-	jsondata = json.loads(raw_data)
+	jsondata = json.loads(raw_data.decode("utf-8"))
 	user_data = jsondata['entry_data']['ProfilePage'][0]['graphql']['user']
 	posts = user_data['edge_owner_to_timeline_media']['edges']
 	return posts
