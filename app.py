@@ -121,7 +121,7 @@ def shop(category, numpage):
 	products = get_products_json(category)
 	likes = [products[i]['node']['edge_liked_by']['count'] for i in range(0, len(products))]
 	#img = [products[i]['node']['display_url'] for i in range(0, len(products))]
-	img = f"https://instagram-shop-scraper.herokuapp.com/static/img/core-img/{category}.jpg"
+	img = [f"https://instagram-shop-scraper.herokuapp.com/static/img/core-img/{category}.jpg" for _ in range(0, len(products))]
 	shop = [products[i]['node']['owner']['username'] for i in range(0, len(products))]
 	descr = []
 	for i in range(0, len(products)):
